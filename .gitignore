@@ -1,3 +1,6 @@
 # USACO input and output files
 *.in
 *.out
+
+#c++ files
+*.exe
