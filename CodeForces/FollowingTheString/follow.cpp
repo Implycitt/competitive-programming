@@ -12,17 +12,24 @@ int main() {
     for (int i = 0; i < n; ++i) {
       cin >> ar[i];
     }
-    vector<int> cnt(26, 0);
-    char s = ' ';
+    unordered_map<char, int> hmap;
+    int curr = 97;
+
     for (int i = 0; i < n; ++i) {
-      for (int j = 0; j < 26; ++j) {
-        if (cnt[j] == ar[i]) {
-          cnt[j] += 1;
-          s += (97 + j);
-          break;
+      if (ar[i] == 0) {
+        cout << char(curr);
+        hmap[curr]++;
+        curr++;
+      } else {
+        for (auto itr: hmap) {
+          if (itr.second == ar[i]) {
+            cout << char(itr.first);
+            hmap[itr.first]++;
+            break;
+          }
         }
       }
     }
-    cout << s << '\n';
+    cout << '\n';
   }
 }
