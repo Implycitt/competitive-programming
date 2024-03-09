@@ -2,26 +2,27 @@
 
 using namespace std;
 
+#define ll long long
+
 int main() {
   int tc;
   cin >> tc;
   while(tc--) {
-    long k, x, a;
-    cin >> k >> x >> a;
-    long t = 0;
+    ll k, x, a, z = 0;
     bool check = true;
-    for (long i = 0; i < x; i++) {
-      long ti = (floor(t/(k-1))) + 1;
-      t += ti;
-      if (t > a) {
+    cin >> k >> x >> a;
+    for (int i = 0; i < x; ++i) {
+      int zi = z/(k-1)+1;
+      z += zi;
+      if (z > a) {
         check = false;
         break;
       }
     }
-    if (check && (a-t)*k > a) {
-      cout << "YES" << '\n';
+    if (check and (a-z) * k > a) {
+      cout << "YES\n";
     } else {
-      cout << "NO" << '\n';
+      cout << "NO\n";
     }
   }
 }
