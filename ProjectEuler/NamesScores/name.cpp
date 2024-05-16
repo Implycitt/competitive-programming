@@ -8,19 +8,19 @@ int main() {
 
   vector<string> names;
   fstream fin("names.txt");
-  ll sum = 1;
+  ll sum = 0;
   string name;
   while(getline(fin, name)) {
     names.push_back(name);
   }
   sort(names.begin(), names.end());
 
-  for (int i = 1; i <= names.size()+1; ++i) {
+  for (int i = 0; i < names.size(); ++i) {
     ll s = 0;
-    for (int c : names[i-1]) {
+    for (int c : names[i]) {
       s += c - 64;
     }
-    sum += s * i;
+    sum += s * (i+1);
   }
-  cout << sum-1;
+  cout << sum;
 }
