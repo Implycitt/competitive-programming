@@ -17,30 +17,29 @@ int main() {
     grid.push_back(g);
   }
   
-  
-  int pointer1 = 0;
   ll largestProd = 0;
-  /*
-  for (int x = 0; x < 20; ++x) {
-    ll prod = 1;
-    int pointer2 = pointer1+3; 
-    for (int y = pointer1; y <= pointer2; ++y) {
-      prod *= grid[x][y]; 
+  
+  // moving left to right
+  for (int i = 0; i < size(grid); ++i) {
+    int pointer1 = 0, pointer2 = 3;
+    for (pointer1; pointer1 <= size(grid[i])-4; ++pointer1) {
+      ll prod = 1;
+      for (int j = pointer1; j <= pointer2; ++j) {
+        prod *= grid[i][j];
+      }
+      if (prod > largestProd) {
+        largestProd = prod;
+      }
+      pointer2++;
     }
-    if (prod > largestProd) largestProd = prod;
-    pointer1++;
-  }
-  */
+  }    
 
-  int pointer2 = 3;
-  for (int x = 0; x <= 20; ++x) {
-    ll prod = 1;
-    for (int y = pointer1; y <= pointer2; ++y) {
-      prod *= grid[y][x]; 
-      cout << prod << '\n';
-    }
-    if (prod > largestProd) largestProd = prod;
-    pointer2++;
-  }
-  cout << largestProd;
+  //moving up and down
+
+  
+  //moving top left diagonally
+
+  //moving bottom left diagonally
+
+  cout << largestProd << "\n";
 }
