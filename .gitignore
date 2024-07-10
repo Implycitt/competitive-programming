@@ -4,6 +4,10 @@
 
 #c++ files
 *.exe
+out
+*
+!/**/
+!*.*
 
 #vscode
 .vscode/*
