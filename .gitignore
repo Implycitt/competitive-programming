@@ -1,15 +1,14 @@
-# USACO input and output files
-*.in
-*.out
-
 #c++ files
 *
 !*/
 !*.*
 *.exe
 
+# USACO input and output files
+*.in
+*.out
+
 #vscode
 .vscode/*
 
 #current contest
-USACO/Bronze/2024/USOpen
