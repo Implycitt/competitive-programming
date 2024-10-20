@@ -12,3 +12,6 @@
 .vscode/*
 
 #current contest
+
+# Advent of code inputs
+*.txt
