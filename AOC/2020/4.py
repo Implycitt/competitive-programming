@@ -25,7 +25,6 @@ def part2():
             pp[key] = value
         valid = True
 
-        for i in fields:
 
 
         if valid:

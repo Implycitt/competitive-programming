@@ -15,3 +15,6 @@
 
 # Advent of code inputs
 *.txt
+
+# env for downloading inputs 
+.env
