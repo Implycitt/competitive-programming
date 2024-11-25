@@ -1,57 +1,70 @@
 package main
 
 import (
-  // "fmt"
+  "fmt"
   "net/http"
   "os"
   "io"
   "github.com/joho/godotenv"
-  "log"
 )
 
 type configuration struct {
-  SessionCookie string `json:"session-cookie"`
-	Output        string `json:"output"`
-	Year          int    `json:"year"`
-	Day           int    `json:"day"`
-	Wait          bool   `json:"-"`
+  SessionCookie string
+	Output        string 
+	Path          string
+	Year          int    
+	Day           int   
+	Wait          bool   
 }
 
-func download() error {
-  err := godotenv.Load()
-  if err != nil {
-    log.Fatal("Error loading .env file")
-  }
-
-  AOC_SECRET := os.Getenv("AOC_SECRET")
-
+func download(config *configuration) error {
   client := new(http.Client)
-  req, err := http.NewRequest("GET", "https://adventofcode.com/2020/day/1/input", nil)
-  if err != nil {
-    return err
-  }
-
   cookie := new(http.Cookie)
-  cookie.Name, cookie.Value = "session", AOC_SECRET
+
+  req, err := http.NewRequest("GET", fmt.Sprintf("https://adventofcode.com/%d/day/%d/input", config.Year, config.Day), nil)
+  if err != nil { return err }
+
+  cookie.Name, cookie.Value = "session", config.SessionCookie 
   req.AddCookie(cookie)
 
   resp, err := client.Do(req)
-  if err != nil {
-    return err
-  }
+  if err != nil { return err }
 
   defer resp.Body.Close() // so defer waits until the rest of the program executes, basically just closing the response before we forget very smart
 
-  file, err := os.OpenFile("../AOC/inputs/1.txt", os.O_CREATE, 0666)
-  _, err = io.Copy(file, resp.Body)
-
-  if err != nil {
-    return err
+  if _, err := os.Stat(config.Path); os.IsNotExist(err) {
+    os.Mkdir(config.Path, os.ModeDir|0755)
   }
+
+  file, err := os.OpenFile(fmt.Sprintf("%s/%s", config.Path, config.Output), os.O_CREATE, 0666)
+
+  defer file.Close()
+
+  _, err = io.Copy(file, resp.Body)
+  if err != nil { return err }
 
   return nil
 }
 
+func createConfig(day int, year int) (*configuration, error) {
+  config := new(configuration)
+
+  err := godotenv.Load()
+  if err != nil { return config, err }
+  AOC_SECRET := os.Getenv("AOC_SECRET")
+
+  config.SessionCookie = AOC_SECRET 
+  config.Day = day 
+  config.Year = year 
+  config.Output = fmt.Sprintf("%d.txt", config.Day)
+  config.Path = fmt.Sprintf("../AOC/inputs/%d", config.Year)
+
+  return config, nil
+}
+
 func main() {
-  download()
+  config, err := createConfig(1, 2020)
+  if err != nil { return }
+
+  download(config)
 }
