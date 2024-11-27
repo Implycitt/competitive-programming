@@ -23,7 +23,7 @@ func download(config *configuration) error {
   resp, err := client.Do(req)
   if err != nil { return err }
 
-  defer resp.Body.Close() // so defer waits until the rest of the program executes, basically just closing the response before we forget very smart
+  defer resp.Body.Close()
 
   if _, err := os.Stat(config.Path); os.IsNotExist(err) {
     os.Mkdir(config.Path, os.ModeDir|0755)

@@ -4,31 +4,72 @@ import(
   "fmt"
   "os"
   "time"
-	"github.com/joho/godotenv"
+  "bufio"
+  "io"
+  "errors"
+  "strings"
 )
 
 type configuration struct {
   SessionCookie string
 	Output        string 
+	Dir           string 
 	Path          string
 	Year          int 
 	Day           int 
 	Wait          bool   
 }
 
+func createConfigFile() {
+  secret := ""
+  path := ""
+  homedir, err := os.UserHomeDir()
+  if err != nil { return }
+
+  reader := bufio.NewReader(os.Stdin)
+  fmt.Print("Enter your session cookie: ")
+  secret, _ = reader.ReadString('\n')
+  fmt.Print("Enter your input path: ")
+  path, _ = reader.ReadString('\n')
+
+  os.Chdir(homedir)
+  file, err := os.Create("aoc.config")
+  if err != nil { return }
+  defer file.Close()
+  fmt.Fprint(file, (fmt.Sprintf("%s\n%s", secret, path)))
+}
+
 func defaultConfig() (*configuration, error) {
 
   config := new(configuration)
 
-  err := godotenv.Load()
+  homedir, err := os.UserHomeDir()
   if err != nil { return config, err }
-  AOC_SECRET := os.Getenv("AOC_SECRET")
+  os.Chdir(homedir)
+
+  _, err = os.Stat("aoc.config")
+  if errors.Is(err, os.ErrNotExist) {
+    createConfigFile()
+  } 
+
+  file, err := os.Open("aoc.config")
+  if err != nil { return config, err }
+  defer file.Close()
+
+  var configs []string
+  reader := bufio.NewReader(file)
+  for {
+    line, err := reader.ReadString('\n')
+    if err == io.EOF || err != nil { break }
+    configs = append(configs, line) 
+  }
+
+  config.SessionCookie = string(strings.TrimSuffix(configs[0], "\r\n"))
+  config.Dir = configs[1]
 
   est, err := time.LoadLocation("EST")
   if err != nil { os.Exit(1) }
   now := time.Now().In(est)
-
-  config.SessionCookie = AOC_SECRET 
 
   if string(now.Month()) != "December" {
     config.Day = 25
@@ -39,7 +80,7 @@ func defaultConfig() (*configuration, error) {
   }
 
   config.Output = fmt.Sprintf("%d.txt", config.Day)
-  config.Path = fmt.Sprintf("../../AOC/inputs/%d", config.Year)
+  config.Path = fmt.Sprintf("%s/%d", config.Dir, config.Year)
 
   return config, nil
 }
