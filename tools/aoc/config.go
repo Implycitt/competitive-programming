@@ -66,6 +66,8 @@ func defaultConfig() (*configuration, error) {
 
   config.SessionCookie = string(strings.TrimSuffix(configs[0], "\r\n"))
   config.Dir = strings.TrimSuffix(configs[2], "\r\n")
+  config.SessionCookie = strings.TrimSuffix(config.SessionCookie, "\n") // for some reason linux complains without this line 
+  config.Dir = strings.TrimSuffix(config.Dir, "\n")
 
   est, err := time.LoadLocation("EST")
   if err != nil { os.Exit(1) }

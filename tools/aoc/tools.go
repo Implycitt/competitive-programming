@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+  "errors"
 )
 
 func download(config *configuration) error {
@@ -25,11 +26,12 @@ func download(config *configuration) error {
 
   defer resp.Body.Close()
 
-  if _, err := os.Stat(config.Path); os.IsNotExist(err) {
-    os.Mkdir(config.Path, os.ModeDir|0755)
-  }
+  _, err = os.Stat(config.Path)
+  if errors.Is(err, os.ErrNotExist) {
+    os.MkdirAll(config.Path, os.ModePerm)
+  } 
 
-  file, err := os.OpenFile(fmt.Sprintf("%s/%s", config.Path, config.Output), os.O_CREATE, 0666)
+  file, err := os.OpenFile(fmt.Sprintf("%s/%s", config.Path, config.Output), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 
   defer file.Close()
 
