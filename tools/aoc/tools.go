@@ -14,6 +14,8 @@ func download(config *configuration) error {
   client := new(http.Client)
   cookie := new(http.Cookie)
 
+  fmt.Println(config)
+
   req, err := http.NewRequest("GET", fmt.Sprintf("https://adventofcode.com/%d/day/%d/input", config.Year, config.Day), nil)
   if err != nil { return err }
 
@@ -29,6 +31,7 @@ func download(config *configuration) error {
     os.Mkdir(config.Path, os.ModeDir|0755)
   }
 
+  fmt.Println(config.Path)
   file, err := os.OpenFile(fmt.Sprintf("%s/%s", config.Path, config.Output), os.O_CREATE, 0666)
 
   defer file.Close()

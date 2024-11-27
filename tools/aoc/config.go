@@ -65,7 +65,7 @@ func defaultConfig() (*configuration, error) {
   }
 
   config.SessionCookie = string(strings.TrimSuffix(configs[0], "\r\n"))
-  config.Dir = configs[1]
+  config.Dir = strings.TrimSuffix(configs[2], "\r\n")
 
   est, err := time.LoadLocation("EST")
   if err != nil { os.Exit(1) }
@@ -88,4 +88,6 @@ func defaultConfig() (*configuration, error) {
 func (config *configuration) merge(other *configuration) {
   if other.Year != 0 { config.Year = other.Year }
   if other.Day != 0 { config.Day = other.Day }
+  config.Output = fmt.Sprintf("%d.txt", config.Day)
+  config.Path = fmt.Sprintf("%s/%d", config.Dir, config.Year)
 }
