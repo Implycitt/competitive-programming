@@ -1,4 +1,4 @@
-with open("../in.txt", 'r') as file:
+with open("../inputs/2020/3.txt", 'r') as file:
     text = file.read().splitlines()
     text = [list(i) for i in text]
 
@@ -34,9 +34,10 @@ def part2():
             if endlength-1 == ypos:
                 end = True
                 total *= sum
-                print(sum)
                 break
+
     print(total)
 
 if __name__ == "__main__":
+    part1()
     part2()

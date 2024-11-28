@@ -47,4 +47,5 @@ def part2():
     print(sr-sum(passes))
     
 if __name__ == "__main__":
+    part1()
     part2()

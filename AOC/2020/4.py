@@ -1,6 +1,6 @@
 import re
 
-with open("../in.txt", 'r') as file:
+with open("../inputs/2020/4.txt", 'r') as file:
     text = file.read().split('\n\n')
 
 def part1():

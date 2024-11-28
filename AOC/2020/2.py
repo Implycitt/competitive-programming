@@ -1,4 +1,4 @@
-with open("../in.txt", 'r') as file:
+with open("../inputs/2020/2.txt", 'r') as file:
     input = file.read().splitlines()
 
 def part1():
@@ -23,4 +23,5 @@ def part2():
     print(sum)
 
 if __name__ == "__main__":
+    part1()
     part2()
