@@ -73,7 +73,7 @@ func defaultConfig() (*configuration, error) {
   if err != nil { os.Exit(1) }
   now := time.Now().In(est)
 
-  if string(now.Month()) != "December" {
+  if now.Month() != time.December {
     config.Day = 25
     config.Year = int(now.Year())-1
   } else {
