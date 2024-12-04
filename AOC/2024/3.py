@@ -4,10 +4,9 @@ with open("../inputs/2024/3.txt", 'r') as file:
 
 def part1():
     s = 0
-    muls = re.findall("(mul)\((\d+),(\d+)\)", data)
-    for mul, a, b in muls:
-        if mul:
-            s += int(a) * int(b)
+    muls = re.findall("mul\((\d+),(\d+)\)", data)
+    for a, b in muls:
+        s += int(a) * int(b)
 
     print(s)
 
