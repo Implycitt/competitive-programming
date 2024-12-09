@@ -31,7 +31,6 @@ def part1():
 
     print(len(antinodes))
 
-
 def part2():
     row = len(data)
     col = len(data[0])
