@@ -8,16 +8,15 @@ def part1():
     for i in range(len(data)):
         
         if i % 2 == 0:
-            disk.append(int(str(index)*int(data[i])))
+            disk.append([(str(index))]*int(data[i]))
             index += 1
         else:
-            disk.append('.'*int(data[i]))
+            disk.append(['.']*int(data[i]))
 
-    print(disk)
-    # disk = list(''.join(disk))
+    disk = [j for i in disk for j in i]
 
     pind, lind = 0, len(disk)-1
-    while pind != lind:
+    while pind < lind:
         if disk[pind] == '.':
             if disk[lind] != '.':
                 disk[pind] = disk[lind]
