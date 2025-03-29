@@ -12,6 +12,7 @@
 .vscode/*
 
 #current contest
+USACO/Bronze/2024/December
 
 # Advent of code inputs
 *.txt

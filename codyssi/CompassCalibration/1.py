@@ -30,18 +30,15 @@ def part3():
     newText = []
     for i in range(0, len(text)-1, 2):
        newText.append(int(text[i] + text[i+1])) 
-    print(newText)
 
     mag = newText[1:]
     signs = text[-1]
-    # signs = signs[1:]
+    signs = signs[::-1]
     initial = newText[0]
     new = []
 
     for i in range(len(mag)):
         new.append(eval(f'{signs[i]}{mag[i]}'))
-
-    print(new)
     
     s = sum([int(i) for i in new])
     print(int(initial) + s)
