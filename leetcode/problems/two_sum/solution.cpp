@@ -1,21 +1,17 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        vector<int> target_indices;
-
-        unordered_map<int, int> hash_table;
-        for (int i = 0; i < nums.size(); i++) {
-            int second_integer = target - nums.at(i);
-
-            if (hash_table.find(second_integer) != hash_table.end()) { 
-            target_indices.push_back(i);
-            target_indices.push_back(hash_table.find(second_integer)->second);
-            break;
-            } else {
-            hash_table[nums.at(i)] = i;
+        int i{};
+        int j{};
+        while (i != nums.size()-1) {
+            if (i == j) ++j;
+            if (j == nums.size()) {
+                j = 0; 
+                ++i;
             }
+            if (nums[i] + nums[j] == target) return {i, j};
+            ++j;
         }
-
-        return target_indices;
+        return {};
     }
 };
