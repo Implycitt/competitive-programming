@@ -13,6 +13,6 @@ jobs:
       - name: Update Leetcode cookies
         uses: Implycitt/UpdateLCCookies@main
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.LC_COOKIES_PAT }}
           leetcode-email: ${{ secrets.LEETCODE_EMAIL }}
           leetcode-password: ${{ secrets.LEETCODE_PASSWORD }}
